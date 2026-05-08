@@ -1,0 +1,112 @@
+<html>
+    <head>
+        <title>VPCC Creator</title>
+        <!--JetBrains Mono font(licensed under SIL Open Font License, Version 1.1)-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+        <!--Page styling-->
+        <style>
+            .header {
+                text-align: center;
+            }
+            .input_boxes {
+                border-radius: 25px;
+                border-width: 2px;
+                border-color: #16c4cd;
+                padding: 1%;
+                font-family: "JetBrains Mono", monospace;
+            }
+            .generate_btn {
+                background-color: darkcyan;
+                color: #f0f0f0;
+            }
+            .md_btn {
+                background-color: blueviolet;
+            }
+            .links {
+                margin-left: 10px; 
+                margin-right: 10px;
+            }
+            .text_style {
+                color: rgb(0, 156, 156);
+            }
+            body {
+                font-family: "JetBrains Mono", monospace;
+            }
+            @media (prefers-color-scheme: dark) {
+                body {
+                    background-color: #1a1a1a;
+                    color: #f0f0f0;
+                }
+            }
+        </style>
+        <script>
+            async function generate_md() {
+                //Fetch Markdown template
+                const VPCCfile =  await fetch("./vpcc_v1_template.md");
+                const VPCCtext = await VPCCfile.text();
+
+                //Insert Values
+                const enties = document.getElementById("legal_entities_value").value;
+                const jurisdiction = document.getElementById("primary_jurisdiction_value").value;
+                const downloadVer = VPCCtext.replace("{{ legal_entities }}", enties).replace("{{ primary_jurisdiction }}", jurisdiction);
+
+                //Generate download link
+                const download_blob = new Blob([downloadVer], { type: 'text/markdown' });
+                const download_link = URL.createObjectURL(download_blob);
+                
+                //Start Download
+                const down_a = document.createElement('a');
+                down_a.href = download_link;
+                down_a.download = 'VPCC_generated_v1.md';
+                document.body.appendChild(down_a);
+                down_a.click();
+            }
+            async function generate_html() {
+                //Fetch HTML template
+                const VPCCfile =  await fetch("./vpcc_v1_template.html");
+                const VPCCtext = await VPCCfile.text();
+
+                //Insert Values
+                const enties = document.getElementById("legal_entities_value").value;
+                const jurisdiction = document.getElementById("primary_jurisdiction_value").value;
+                const downloadVer = VPCCtext.replace("{{ legal_entities }}", enties).replace("{{ primary_jurisdiction }}", jurisdiction);
+
+                //Generate download link
+                const download_blob = new Blob([downloadVer], { type: 'text/html' });
+                const download_link = URL.createObjectURL(download_blob);
+                
+                //Start Download
+                const down_a = document.createElement('a');
+                down_a.href = download_link;
+                down_a.download = 'VPCC_generated_v1.html';
+                document.body.appendChild(down_a);
+                down_a.click();
+            }
+        </script>
+    </head>
+    <body class="header">
+        <h1>VPCC Generator</h1>
+        <h2>Enter legal entities holding the IP</h2>
+        <input class="input_boxes" id="legal_entities_value" placeholder="Legal Enties">
+        <br>
+        <h2>Enter primary jurisdiction</h2>
+        <input class="input_boxes" id="primary_jurisdiction_value" placeholder="Primary Jurisdiction">
+        <br>
+        <br>
+        <br>
+        <button class="generate_btn input_boxes" onclick="generate_html()">Generate and Download HTML</button>
+        <br>
+        <br>
+        <button class="generate_btn input_boxes md_btn" onclick="generate_md()">Generate and Download Markdown</button>
+        <br>
+        <br>
+        <div style="display:flex; flex-direction: row; justify-content: center; align-items: center;">
+            <p class="links"><a class="text_style" href="./ddul_v1.html">DDUL V1</a></p>
+            <p class="links"><a class="text_style" href="./ddul_v1.md">DDUL V1 md file</a></p>
+            <p class="links"><a class="text_style" href="./vpcc_v1_template.html">VPCC template</a></p>
+            <p class="links"><a class="text_style" href="./docs.html">Embedding Documentation</a></p>
+        </div>
+    </body>
+</html>
