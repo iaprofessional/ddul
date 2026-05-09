@@ -7,6 +7,7 @@ Get started by heading over to https://iaprofessional.github.io/ddul/
 2) Version controlled standard.
 3) Authoritative and stringent.
 4) Remedies such as interim injunction and model disgorgement(destruction) available for breach of contract.
+5) Exceptions for specific legal entities are allowed.
 
 # License
 Creative Commons Zero v1.0 Universal
